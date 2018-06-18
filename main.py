@@ -26,7 +26,7 @@ def parse_report():
         tds = entry.find_all("td")
         player_name = tds[1].text.strip('\n')
         try:
-            azs_number = int(re.findall(r'(?<=ALK_)\d+', player_name)[0])
+            azs_number = int(re.findall(r'(?<=\D{3}_)\d+', player_name)[0])
             data[azs_number] = int(tds[5].text)
         except:
             pass
