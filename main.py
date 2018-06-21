@@ -1,16 +1,23 @@
 # coding=utf-8
+import re
+
 from openpyxl import load_workbook
 from pathlib import Path
 from bs4 import BeautifulSoup
-import re
 from openpyxl.styles import PatternFill
 
 
-def is_interesting(tr):
-    return re.findall(r'ALK_', tr.text)
+def is_interesting(tr, azs_prefixes):
+    for prefix in azs_prefixes:
+        if tr.text.find(prefix) != -1:
+            return True
+    return False
 
 
 def parse_report():
+    azs_prefixes = ['ALK', 'CHO', 'EKA', 'HMO', 'IVO', 'KDK', 'KEO', 'KYK', 'MSK', 'NNO', 'NSO',
+                    'OMO', 'SPB', 'SVO', 'TUO', 'YAR', 'IAR', 'KRR', 'MOW', 'MSK', 'NN', 'RYZ',
+                    'CEK', 'MSK', 'NN', 'SPB', 'TUO', 'YAR']
     with open("AGAS.html") as file:
         soup = BeautifulSoup(file.read(), "lxml")
 
@@ -18,7 +25,7 @@ def parse_report():
     trs = tbody.find_all("tr")
     interesting_tr = []
     for tr in trs:
-        if is_interesting(tr):
+        if is_interesting(tr, azs_prefixes):
             interesting_tr.append(tr)
 
     data = {}
@@ -26,7 +33,7 @@ def parse_report():
         tds = entry.find_all("td")
         player_name = tds[1].text.strip('\n')
         try:
-            azs_number = int(re.findall(r'(?<=\D{3}_)\d+', player_name)[0])
+            azs_number = int(re.findall(r'(?<=\D{3}[_-])\d+', player_name)[0])
             data[azs_number] = int(tds[5].text)
         except:
             pass
@@ -64,9 +71,10 @@ if __name__ == "__main__":
             n = row[12].value
             row16 = report[azs_code] - n
         if row16 < 0:
-            row[16].fill = PatternFill(fill_type='solid', start_color='FF9900', end_color='FF9900')
+            row[16].fill = PatternFill(fill_type='solid',
+                                       start_color='FF9900',
+                                       end_color='FF9900')
 
         row[15].value = report[azs_code]
 
     wb.save('test.xlsx')
-
