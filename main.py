@@ -1,6 +1,7 @@
 # coding=utf-8
 import re
 import sys
+sys.path.insert(0, './venv/lib/python2.7/site-packages/')
 
 from openpyxl import load_workbook
 from pathlib import Path
