@@ -69,6 +69,12 @@ def parse_arguments(arguments):
     return agas_file_name, order_file_name
 
 
+def print_row(row):
+    for i in row:
+        print i.coordinate
+    line = ['({}) {}'.format(cell.value, cell.coordinate) for cell in row if cell.value is not None]
+    print "    ".join(line)
+
 if __name__ == "__main__":
     (agas_file_name, order_file_name) = parse_arguments(sys.argv)
 
@@ -79,6 +85,8 @@ if __name__ == "__main__":
     flag = False
     for row in ws.iter_rows():
         if row[1].value == u"№ АЗС:":
+            print_row(row)
+            print '\n\n'
             flag = True
             continue
         elif row[1].value == None:
