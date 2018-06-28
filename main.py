@@ -119,10 +119,10 @@ def print_row(row):
         pass
 
 
-def suitable_date_range(row):
-    if order_start_date == agas_start_date and order_end_date == agas_end_date:
-        return True
-    return False
+# def suitable_date_range(row):
+#     if order_start_date == agas_start_date and order_end_date == agas_end_date:
+#         return True
+#     return False
 
 
 if __name__ == "__main__":
@@ -136,14 +136,16 @@ if __name__ == "__main__":
     flag = False
     for row in ws.iter_rows():
         if row[1].value == u"№ АЗС:":
-            order_start_date, order_end_date = get_order_date_range(row[12].value)
-            if suitable_date_range(row):
-                flag = True
-                continue
-            else:
-                errors.append("Даты отчёта ({} - {}) не соответствуют целевому диапазону дат.".format(
-                    agas_start_date, agas_end_date
-                ))
+            flag = True
+            continue
+            # order_start_date, order_end_date = get_order_date_range(row[12].value)
+            # if suitable_date_range(row):
+            #     flag = True
+            #     continue
+            # else:
+            #     errors.append("Даты отчёта ({} - {}) не соответствуют целевому диапазону дат.".format(
+            #         agas_start_date, agas_end_date
+            #     ))
         elif row[1].value == None:
             flag = False
         if flag == False:
@@ -151,25 +153,22 @@ if __name__ == "__main__":
 
         azs_code = row[1].value
 
-        if type(row[12].value) is long:
-            n = row[12].value
-
-        elif type(row[12].value) is str:
-            try:
-                n = eval(row[12].value.strip('='))
-            except:
-                pass
+        # if type(row[12].value) is long:
+        #     n = row[12].value
+        #
+        # elif type(row[12].value) is str:
+        #     try:
+        #         n = eval(row[12].value.strip('='))
+        #     except:
+        #         pass
 
         row[15].value = report[azs_code]
-        row16 = report[azs_code] - n
-        if row16 < 0:
-            row[16].fill = PatternFill(fill_type='solid',
-                                       start_color='FF9900',
-                                       end_color='FF9900')
+        # row16 = report[azs_code] - n
+        # if row16 < 0:
+        #     row[16].fill = PatternFill(fill_type='solid',
+        #                                start_color='FF9900',
+        #                                end_color='FF9900')
 
 
-    for i, error in enumerate(errors):
-        i += 50
-        ws['A{}'.format(i)] = error
 
     wb.save('file.xlsx')
