@@ -62,7 +62,7 @@ def parse_report(file_name):
     trs = tbody.find_all("tr")
     interesting_tr = []
 
-    agas_start_date, agas_end_date = get_agas_date_range(trs)
+    # agas_start_date, agas_end_date = get_agas_date_range(trs)
 
     for tr in trs:
         if is_interesting(tr, azs_prefixes):
