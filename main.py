@@ -72,11 +72,15 @@ def parse_report(file_name):
     for entry in interesting_tr:
         tds = entry.find_all("td")
         player_name = tds[1].text.strip('\n')
-        try:
-            azs_number = int(re.findall(r'(?<=\D{3}[_-])\d+', player_name)[0])
-            data[azs_number] = int(tds[5].text)
-        except:
-            pass
+        for azs_prefix in azs_prefixes:
+            try:
+                azs_number = int(re.findall(r"(?<={}[_-])\d+".format(azs_prefix), player_name)[0])
+                if data.get(azs_number):
+                    data[azs_number] += int(tds[5].text)
+                else:
+                    data[azs_number] = int(tds[5].text)
+            except:
+                pass
 
     return data
 
@@ -118,7 +122,6 @@ def print_row(row):
     except:
         pass
 
-
 # def suitable_date_range(row):
 #     if order_start_date == agas_start_date and order_end_date == agas_end_date:
 #         return True
@@ -130,6 +133,7 @@ if __name__ == "__main__":
     (agas_file_name, order_file_name) = parse_arguments(sys.argv)
 
     report = parse_report(agas_file_name)
+
     wb = load_workbook(str(order_file_name))
     ws = wb.active
 
@@ -168,7 +172,5 @@ if __name__ == "__main__":
         #     row[16].fill = PatternFill(fill_type='solid',
         #                                start_color='FF9900',
         #                                end_color='FF9900')
-
-
 
     wb.save(str(order_file_name))
