@@ -120,7 +120,7 @@ def print_row(row):
                 for cell in row if cell.value is not None]
         print "    ".join(line)
     except:
-        pass
+        passaleale
 
 # def suitable_date_range(row):
 #     if order_start_date == agas_start_date and order_end_date == agas_end_date:
@@ -166,7 +166,7 @@ if __name__ == "__main__":
         #     except:
         #         pass
 
-        row[15].value = report[azs_code]
+        row[15].value = report.get(azs_code, 0)
         # row16 = report[azs_code] - n
         # if row16 < 0:
         #     row[16].fill = PatternFill(fill_type='solid',
