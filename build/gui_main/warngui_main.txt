@@ -1,0 +1,26 @@
+missing module named nt - imported by os, ntpath, shutil, pathlib, /home/alexkott/Documents/YouDo/agas/gui_main.py
+missing module named org - imported by pickle, /home/alexkott/Documents/YouDo/agas/gui_main.py
+excluded module named _frozen_importlib - imported by importlib, importlib.abc, /home/alexkott/Documents/YouDo/agas/gui_main.py
+missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, /home/alexkott/Documents/YouDo/agas/gui_main.py
+missing module named _winreg - imported by platform, /home/alexkott/Documents/YouDo/agas/gui_main.py
+missing module named _scproxy - imported by urllib.request
+missing module named java - imported by platform, /home/alexkott/Documents/YouDo/agas/gui_main.py
+missing module named 'java.lang' - imported by platform, /home/alexkott/Documents/YouDo/agas/gui_main.py, xml.sax._exceptions
+missing module named vms_lib - imported by platform, /home/alexkott/Documents/YouDo/agas/gui_main.py
+missing module named winreg - imported by platform, mimetypes, /home/alexkott/Documents/YouDo/agas/gui_main.py, urllib.request
+missing module named urllib.quote - imported by urllib, pathlib
+missing module named msvcrt - imported by subprocess, /home/alexkott/Documents/YouDo/agas/gui_main.py, getpass
+missing module named _winapi - imported by subprocess, /home/alexkott/Documents/YouDo/agas/gui_main.py
+missing module named _dummy_threading - imported by dummy_threading, /home/alexkott/Documents/YouDo/agas/gui_main.py
+missing module named 'org.python' - imported by copy, /home/alexkott/Documents/YouDo/agas/gui_main.py, xml.sax
+missing module named PIL - imported by openpyxl.drawing.image
+missing module named Image - imported by openpyxl.drawing.image
+missing module named tests - imported by openpyxl.reader.excel
+missing module named pandas - imported by openpyxl.compat.numbers
+missing module named numpy - imported by openpyxl.compat.numbers
+missing module named iconv_codec - imported by bs4.dammit
+missing module named chardet - imported by bs4.dammit
+missing module named cchardet - imported by bs4.dammit
+missing module named 'html5lib.treebuilders' - imported by bs4.builder._html5lib
+missing module named 'html5lib.constants' - imported by bs4.builder._html5lib
+missing module named html5lib - imported by bs4.builder._html5lib

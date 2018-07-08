@@ -130,6 +130,7 @@ if __name__ == "__main__":
     (agas_file_name, order_file_name) = parse_arguments(sys.argv)
 
     report = parse_report(agas_file_name)
+    print(report[14205])
     wb = load_workbook(str(order_file_name))
     ws = wb.active
 
