@@ -1,5 +1,6 @@
 # coding=utf-8
 import re
+import sys
 from pathlib import Path
 from typing import List, Tuple
 
@@ -30,7 +31,7 @@ def parse_report(file_name: Path) -> dict:
     azs_prefixes = ['ALK', 'CHO', 'EKA', 'HMO', 'IVO', 'KDK', 'KEO', 'KYK', 'MSK', 'NNO', 'NSO',
                     'OMO', 'SPB', 'SVO', 'TUO', 'YAR', 'IAR', 'KRR', 'MOW', 'MSK', 'NN', 'RYZ',
                     'CEK', 'MSK', 'NN', 'SPB', 'TUO', 'YAR']
-    with open(str(file_name)) as file:
+    with open(str(file_name), encoding='utf8') as file:
         soup = BeautifulSoup(file.read(), "lxml")
 
     tbody = soup.find("tbody")
@@ -77,7 +78,7 @@ def process_files(field1: Entry, field2: Entry) -> None:
         row[15].value = report[azs_code]
 
     wb.save(str(order_file_name))
-    exit()
+    sys.exit()
 
 
 if __name__ == "__main__":
