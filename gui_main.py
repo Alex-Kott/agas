@@ -46,11 +46,15 @@ def parse_report(file_name: Path) -> dict:
     for entry in interesting_tr:
         tds = entry.find_all("td")
         player_name = tds[1].text.strip('\n')
-        try:
-            azs_number = int(re.findall(r'(?<=\D{3}[_-])\d+', player_name)[0])
-            data[azs_number] = int(tds[5].text)
-        except Exception as e:
-            pass
+        for azs_prefix in azs_prefixes:
+            try:
+                azs_number = int(re.findall(rf'(?<={azs_prefix}[_-])\d+', player_name)[0])
+                if not data.get(azs_number):
+                    data[azs_number] = int(tds[5].text)
+                else:
+                    data[azs_number] += int(tds[5].text)
+            except Exception as e:
+                pass
 
     return data
 
