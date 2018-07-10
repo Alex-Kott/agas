@@ -79,7 +79,10 @@ def process_files(field1: Entry, field2: Entry) -> None:
             continue
 
         azs_code = row[1].value
-        row[15].value = report[azs_code]
+        try:
+            row[15].value = report[azs_code]
+        except KeyError:
+            row[15].value = 0
 
     wb.save(str(order_file_name))
     sys.exit()
