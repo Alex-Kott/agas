@@ -39,9 +39,9 @@ def is_interesting(tr: Tag, azs_prefixes: List[str]) -> bool:
 
 
 def parse_report(file_name: Path) -> dict:
-    azs_prefixes = ['ALK', 'CHO', 'EKA', 'HMO', 'IVO', 'KDK', 'KEO', 'KYK', 'MSK', 'NNO', 'NSO',
+    azs_prefixes = {'ALK', 'CHO', 'EKA', 'HMO', 'IVO', 'KDK', 'KEO', 'KYK', 'MSK', 'NNO', 'NSO',
                     'OMO', 'SPB', 'SVO', 'TUO', 'YAR', 'IAR', 'KRR', 'MOW', 'MSK', 'NN', 'RYZ',
-                    'CEK', 'MSK', 'NN', 'SPB', 'TUO', 'YAR']
+                    'CEK', 'MSK', 'NN', 'SPB', 'TUO', 'YAR'}
     with open(str(file_name), encoding='utf8') as file:
         soup = BeautifulSoup(file.read(), "lxml")
 
