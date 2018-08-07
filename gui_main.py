@@ -10,14 +10,25 @@ from bs4.element import Tag
 from openpyxl import load_workbook
 
 
-def select_file(title: str,
-                element: Entry,
-                filetypes: List[Tuple[str, str]]) -> None:
-    filetypes.append(('All files', '*.*'))
-    file_name = Path(filedialog.askopenfilename(title=title,
-                                                filetypes=filetypes))
+def select_report(title: str,
+                  element: Entry) -> None:
+    """Report -- it's an HTML-file"""
+    filetypes = [('HTML files', '*.html'),
+                 ('All files', '*.*')]
+    file_names = filedialog.askopenfilenames(title=title, filetypes=filetypes)
+
     element.delete(0, END)
-    element.insert(0, file_name)
+    element.insert(0, ';'.join(file_names))
+
+
+def select_template(title: str,
+                    element: Entry) -> None:
+    """Template -- it's Excel-file"""
+    filetypes = [('Excel files', '*.xlsx'),
+                 ('All files', '*.*')]
+    file_names = filedialog.askopenfilename(title=title, filetypes=filetypes)
+    element.delete(0, END)
+    element.insert(0, file_names)
 
 
 def is_interesting(tr: Tag, azs_prefixes: List[str]) -> bool:
@@ -60,12 +71,14 @@ def parse_report(file_name: Path) -> dict:
 
 
 def process_files(field1: Entry, field2: Entry) -> None:
-    agas_file_name = Path(field1.get())
-    order_file_name = Path(field2.get())
+    report_file_names = [Path(file_name) for file_name in field1.get().split(';')]
+    template_file_name = Path(field2.get())
 
-    report = parse_report(agas_file_name)
+    report = {}
+    for file_name in report_file_names:
+        report.update(parse_report(file_name))
 
-    wb = load_workbook(str(order_file_name))
+    wb = load_workbook(str(template_file_name))
     ws = wb.active
 
     flag = False
@@ -84,7 +97,7 @@ def process_files(field1: Entry, field2: Entry) -> None:
         except KeyError:
             row[15].value = 0
 
-    wb.save(str(order_file_name))
+    wb.save(str(template_file_name))
     sys.exit()
 
 
@@ -103,12 +116,10 @@ if __name__ == "__main__":
     b1_title = "Выбрать отчёт"
     b2_title = "Выбрать шаблон"
     b1 = Button(text=b1_title,
-                command=lambda: select_file(title=b1_title, element=text_field1,
-                                            filetypes=[('HTML files', '*.html')])
+                command=lambda: select_report(title=b1_title, element=text_field1)
                 )
     b2 = Button(text=b2_title,
-                command=lambda: select_file(title=b2_title, element=text_field2,
-                                            filetypes=[('Excel files', '*.xlsx')])
+                command=lambda: select_template(title=b2_title, element=text_field2)
                 )
     b3 = Button(text="Run", command=lambda: process_files(text_field1, text_field2))
 
