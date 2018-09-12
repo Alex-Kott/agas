@@ -45,7 +45,7 @@ def parse_report(file_name: Path) -> dict:
     with open(str(file_name), encoding='utf8') as file:
         soup = BeautifulSoup(file.read(), "lxml")
 
-    tbody = soup.find("tbody")
+    tbody = soup.find("table")
     trs = tbody.find_all("tr")
     interesting_tr = []
 
