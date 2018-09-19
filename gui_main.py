@@ -43,7 +43,7 @@ def parse_report(file_name: Path) -> dict:
                     'OMO', 'SPB', 'SVO', 'TUO', 'YAR', 'IAR', 'KRR', 'MOW', 'MSK', 'NN', 'RYZ',
                     'CEK', 'MSK', 'NN', 'SPB', 'TUO', 'YAR'}
     with open(str(file_name), encoding='utf8') as file:
-        soup = BeautifulSoup(file.read(), "lxml")
+        soup = BeautifulSoup(file.read(), "html.parser")
 
     tbody = soup.find("table")
     trs = tbody.find_all("tr")
